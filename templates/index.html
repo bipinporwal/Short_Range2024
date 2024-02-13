@@ -1,18 +1,259 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FastAPI Webpage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Rainfall Prediction Portal</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/4/44/Indian_Institute_of_Tropical_Meteorology_Logo.png" type="image/png">
+    <link rel="shortcut icon" href="path/to/home-icon.png" type="image/x-icon">
+    <style>
+        body {
+                margin: 0;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+                header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section img {
+            height: 40px;
+            margin: 0 10px;
+        }
+
+        .title-section {
+            text-align: left;
+        }
+
+        h1, h2, p {
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+
+        nav {
+            background-color: #f2f2f2;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        nav li {
+            float: left;
+        }
+
+        nav a {
+            display: block;
+            color: #333;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .hero-section {
+            position: relative;
+        }
+
+        .hero-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        article {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        article img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        article p {
+            margin-top: 10px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <script>
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        }
+
+        function hideLoading() {
+            document.getElementById("loading").style.display = "none";
+        }
+
+        // Function to hide loading when the page is loaded again
+        window.onload = function () {
+            // Check if the predict button was clicked before
+            if (sessionStorage.getItem('predictClicked')) {
+                showLoading(); // If yes, show loading widget
+            } else {
+                hideLoading(); // If not, hide loading widget
+            }
+        };
+
+        // Function to hide loading when the page is loaded
+        // Use a single window.onload, not multiple
+        window.onload = function () {
+            hideLoading(); // Hide loading widget when the page is loaded
+        };
+
+        // Function to set sessionStorage when predict button is clicked
+        function predictClicked() {
+            sessionStorage.setItem('predictClicked', 'true');
+        }
+    </script>
 </head>
 <body>
-    <h1>FastAPI Webpage</h1>
-    <form action="{{ url_for('predict') }}" method="post">
-        <label for="date">Date:</label>
-        <input type="text" id="date" name="date" required>
-        <br>
-        <label for="num_forecasts">Number of Forecasts:</label>
-        <input type="number" id="num_forecasts" name="num_forecasts" required>
-        <br>
-        <button type="submit">Predict</button>
-    </form>
+    <header>
+      <div class="logo-section">
+          <img src="https://upload.wikimedia.org/wikipedia/en/4/44/Indian_Institute_of_Tropical_Meteorology_Logo.png" alt="IITM Logo">
+          <img src="https://banner2.cleanpng.com/20180704/gfw/kisspng-computer-icons-logo-rain-5b3d1f08ec6651.8766185115307322969683.jpg" alt="Emblem of India">
+      </div>
+      <div class="title-section">
+          <h1>Rainfall Prediction Portal</h1>
+          <p>(Developed by the Indian Institute of Tropical Meteorology, Pune)</p>
+      </div>
+      <div class="logo-section">
+          <img src="https://static.wikia.nocookie.net/logopedia/images/2/2d/Ministry_of_Earth_Sciences.jpeg/revision/latest?cb=20200329101558" alt="Ministry of Earth Sciences Logo">
+          <img src="https://img.favpng.com/23/22/11/indian-institute-of-tropical-meteorology-india-meteorological-department-ministry-of-earth-sciences-regional-meteorological-centre-chennai-government-of-india-png-favpng-pZyyHrA0T8GTV5y60YhEDSL4S.jpg" alt="Regional Meteorological Centre Logo">
+      </div>
+  </header>
+  
+  <nav>
+      <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#central-india">Rainfall Prediction</a></li>
+          <!--<li><a href="#northeast-india">Northeast India</a></li>-->
+          <!--<li><a href="#dph">DPH</a></li>-->
+          <li><a href="#contact">Contact Us</a></li>
+      </ul>
+  </nav>
+  
+  <section class="hero-section">
+      <img src="https://www.hindustantimes.com/ht-img/img/2023/03/21/1600x900/rainfall_activity_in_northwest_northeast_india_1679359529950_1679359530151_1679359530151.jpg" alt="Rainfall Background Image">
+      <div class="hero-content">
+          <h2>Rainfall Prediction Model: Anticipate Tomorrow's Weather</h2>
+          <p>Explore the cutting-edge forecasting capabilities of our website and stay ahead of rainfall trends. Uncover accurate predictions for a weather-ready tomorrow.</p>
+      </div>
+  </section>
+  
+  <section class="content">
+      <article>
+          <h2>Empowering Rainfall Prediction</h2>
+          <p>Anticipating rainfall patterns is essential for various sectors and communities. Our state-of-the-art rainfall prediction model harnesses sophisticated algorithms and real-time data to forecast rainfall with precision, aiding in effective planning and risk management.</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="flex: 1;">
+                  <img src="https://static.toiimg.com/photo/101610595.cms" alt="Rainfall Image 1">
+              </div>
+          </div>
+          <p>Being proactive in response to rainfall variability is paramount. Our dedicated team works tirelessly to deliver reliable forecasts and actionable insights, empowering communities to adapt and thrive in changing weather conditions.</p>
+      </article>
+  </section>
+    <section class="content">
+        <article>
+            <h2 id="central-india">Rainfall Prediction</h2>
+            <form action="{{ url_for('predict') }}" method="post" onsubmit="showLoading(); sessionStorage.setItem('predictClicked', 'true');">
+                <label for="date">Date (YYYY-MM-DD):</label>
+                <input type="text" id="date" name="date" required>
+                <br>
+                <label for="num_forecasts">Number of Forecasts (Please enter more than 1 and less than 4):</label>
+                <input type="number" id="num_forecasts" name="num_forecasts" required>
+                <br>
+                <label for="ext_variables">External Variables:</label>
+                <select id="ext_variables" name="ext_variables">
+                    <option value="none">None</option>
+                    <option value="all">All</option>
+                    <!-- Add more options if needed based on your requirements -->
+                </select>
+                <br>
+                <button type="submit" onclick="predictClicked()">Predict</button>
+            </form>
+            <!-- Loading widget -->
+            <div id="loading" style="display: none; text-align: center;">
+                <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="Loading..." style="width: 50px; height: 50px;">
+                <!-- Adjust width and height as needed -->
+                <p>Your Rainfall Prediction Model is getting ready. Please wait for a while.</p>
+            </div>
+        </article>
+    </section>
+
+<section class="map">
+    <img src="https://www.researchgate.net/publication/283011717/figure/fig4/AS:341132815945762@1458343809779/Political-Map-of-India-Showing-Study-Location-State-of-Delhi.png" alt="Map of India">
+    <!-- Embed a map of India using Google Maps or other map services -->
+</section>
+
+<footer>
+    <p>&copy; 2024 Rainfall Prediction Portal. All rights reserved. | <a href="#privacy">Privacy Policy</a></p>
+</footer>
 </body>
 </html>
