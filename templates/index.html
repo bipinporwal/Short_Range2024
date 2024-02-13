@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FastAPI Webpage</title>
+</head>
+<body>
+    <h1>FastAPI Webpage</h1>
+    <form action="{{ url_for('predict') }}" method="post">
+        <label for="date">Date:</label>
+        <input type="text" id="date" name="date" required>
+        <br>
+        <label for="num_forecasts">Number of Forecasts:</label>
+        <input type="number" id="num_forecasts" name="num_forecasts" required>
+        <br>
+        <button type="submit">Predict</button>
+    </form>
+</body>
+</html>
