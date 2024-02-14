@@ -63,7 +63,7 @@ def read_item(request: Request):
 @app.post("/predict", response_class=HTMLResponse)
 async def predict(request: Request, date: str = Form(...), num_forecasts: int = Form(...), ext_variables: str = Form(...)):
 
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(utils.pick_gpu_lowest_memory())
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
     dir=os.path.dirname(__file__)
     
     ext_variables_list = []
