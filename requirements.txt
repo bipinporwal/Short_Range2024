@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 python==3.11.7
->>>>>>> c81354410784df4c066f6d185f0507f1f500fbe7
 pandocfilters==1.5.1
 parso==0.8.3
 pexpect==4.9.0
