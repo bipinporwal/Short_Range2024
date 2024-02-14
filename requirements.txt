@@ -1,4 +1,4 @@
-pyhton == 23.2.1
+python==3.11.7
 pandocfilters==1.5.1
 parso==0.8.3
 pexpect==4.9.0
