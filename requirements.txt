@@ -72,5 +72,5 @@ websocket-client
 Werkzeug
 widgetsnbextension
 wrapt
-xarray
+xarray==0.20.1
 zipp
